@@ -56,9 +56,13 @@ window.onload = function () {
     todoItem.appendChild(icon)
     todoList.appendChild(todoItem)
 
-    // icon.addEventListener("click", () => {
-
-    // })
+    icon.addEventListener("click", () => {
+      todoItem.parentNode.removeChild(todoItem)
+      let item = JSON.parse(localStorage.getItem('todos'))
+      console.log(item.indexOf(value))
+      item.splice(item.indexOf(value), 1)
+      localStorage.setItem('todos', JSON.stringify(item))
+    })
 
     // todoList.appendChild(icon)
 
