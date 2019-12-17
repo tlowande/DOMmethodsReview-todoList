@@ -25,6 +25,7 @@ window.onload = function () {
   // When receiving data from a web server, the data is always a string.
   //Parse the data with JSON.parse(), and the data becomes a JavaScript object.
   const storage = JSON.parse(localStorage.getItem('todos'))
+
   // Step 2 -> attach an event listener to the `form` variable with `addEventListener`
   // to capture the user input on the `submit` event.
   // Make sure to run `preventDefault()` on the event when the form is submitted.
@@ -49,7 +50,17 @@ window.onload = function () {
   const todoMaker = (value) => {
     let todoItem = document.createElement("li");
     todoItem.textContent = value;
+    const icon = document.createElement("i")
+    icon.setAttribute("class", "fas fa-times-circle")
+
+    todoItem.appendChild(icon)
     todoList.appendChild(todoItem)
+
+    // icon.addEventListener("click", () => {
+
+    // })
+
+    // todoList.appendChild(icon)
 
   }
 
