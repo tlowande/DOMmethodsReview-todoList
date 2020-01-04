@@ -7,11 +7,9 @@ window.onload = function () {
   const form = document.querySelector("form");
   const todoList = document.querySelector("ul");
   const button = document.querySelector("button");
+  const inputDescription = document.getElementById("description")
   const input = document.getElementById("user-todo");
-  // Declare variable `todosArray` to hold our todos.
-  // set our `todosArray` to an empty array.
 
-  // const todosArray = []
   const todosArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : []
 
   const taskComplete = localStorage.getItem('taskComplete') ? JSON.parse(localStorage.getItem('taskComplete')) : []
@@ -39,25 +37,38 @@ window.onload = function () {
   // Finally, set the `input.value` to an empty string.const form = document.querySelector("form");
   form.addEventListener("submit", e => {
     e.preventDefault()
+    console.log(e)
 
     // push onto `todosArray` the `input.value`
-    todosArray.push(input.value)
-    taskComplete.push("false")
+    // todosArray.push(input.value)
+    let todo = {
+      "title": input.value,
+      "description": inputDescription.value,
+      "complete": "false",
+      "date": new Date()
+    }
+    todosArray.push(todo)
+    // taskComplete.push("false")
     // on localStorage now use `setItem()` for the key `'todos'` the value of the todosArray as a string with the `JSON.stringify()` method.
     localStorage.setItem('todos', JSON.stringify(todosArray))
-    localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+    // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
 
     todoMaker(input.value)
     input.value = ""
+    inputDescription.value = ""
   })
 
   // Step 3 -> create a todoMaker function that creates 'li' elements with the text user provides
   // from their form and appends it to the 'ul'.
   const todoMaker = (value) => {
+
     let container = document.createElement("div");
-    let todoItem = document.createElement("li");
+    let todoItem = document.createElement("p");
+
     todoItem.textContent = value;
+
     console.log(taskComplete[todosArray.indexOf(value)])
+
     if (taskComplete[todosArray.indexOf(value)] === "true") {
       todoItem.classList.add('complete')
     }
@@ -75,7 +86,9 @@ window.onload = function () {
     })
 
     const icon = document.createElement("i")
+
     icon.setAttribute("class", "fas fa-times-circle")
+
     icon.addEventListener("click", () => {
       taskComplete.splice(todosArray.indexOf(value), 1)
       // console.log(taskComplete)

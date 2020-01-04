@@ -52,10 +52,11 @@ div {
   align-items: center;
 }
 
-li {
+p {
   padding: 5px;
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
   cursor: pointer;
+  margin: 0;
 }
 
 i {
