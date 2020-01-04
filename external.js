@@ -69,19 +69,24 @@ window.onload = function () {
     let todoItem = document.createElement("p");
     let details = document.createElement("p");
     let date = document.createElement("p");
+
     wrap.classList.add('wrap')
     container.classList.add('container')
-    // todoItem.textContent = value
+    // container.setAttribute("contenteditable", "true");
+
     todoItem.textContent = value.title;
     todoItem.classList.add('to-do')
+    todoItem.setAttribute("contenteditable", "true");
+
+
     details.textContent = value.description
     details.classList.add('description')
+    details.setAttribute("contenteditable", "true");
+
     date.textContent = (new Date(value.date)).toDateString();
     date.classList.add('date')
 
-    // console.log(taskComplete[todosArray.indexOf(value)])
-
-    // if (taskComplete[todosArray.indexOf(value)] === "true") {
+    //sets CSS when refreshing the page to each item
     if (value.complete === "true") {
       container.classList.add('complete')
     } else if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
@@ -90,29 +95,71 @@ window.onload = function () {
       date.classList.add('delayed')
     }
 
-    todoItem.addEventListener("click", () => {
+    //when clicked, edit description
+    details.addEventListener("focusout", () => {
+
+      newValue = {
+        ...value,
+        "description": document.getElementsByClassName("description")[0].innerText,
+      }
+      console.log(newValue)
+      todosArray.splice(todosArray.indexOf(value), 1, newValue)
+
+      localStorage.setItem('todos', JSON.stringify(todosArray))
+    })
+
+    //when clicked, edit title
+    todoItem.addEventListener("focusout", () => {
+
+      newValue = {
+        ...value,
+        "title": document.getElementsByClassName("to-do")[0].innerText,
+      }
+      console.log(newValue)
+      todosArray.splice(todosArray.indexOf(value), 1, newValue)
+
+      localStorage.setItem('todos', JSON.stringify(todosArray))
+    })
+
+
+    const check = document.createElement("i")
+    check.setAttribute("class", "fas fa-check")
+
+    //when clicking on the title, task is marked as complete
+    check.addEventListener("click", () => {
       if (container.classList.contains('complete')) {
+
         container.classList.remove('complete')
-        // taskComplete.splice(todosArray.indexOf(value), 1, "false")
+
+        if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
+          date.classList.add('warning')
+        } else if (new Date(value.date) < new Date()) {
+          date.classList.add('delayed')
+        }
+
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "false" })
 
         localStorage.setItem('todos', JSON.stringify(todosArray))
-        // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+
       } else {
+
+        date.classList.remove('warning')
+        date.classList.remove('delayed')
         container.classList.add('complete')
-        // taskComplete.splice(todosArray.indexOf(value), 1, "true")
+
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "true" })
 
         localStorage.setItem('todos', JSON.stringify(todosArray))
-        // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
       }
     })
 
-    const icon = document.createElement("i")
+    //_________________________
 
-    icon.setAttribute("class", "fas fa-times-circle")
+    const del = document.createElement("i")
 
-    icon.addEventListener("click", () => {
+    del.setAttribute("class", "fas fa-times-circle")
+
+    del.addEventListener("click", () => {
       // taskComplete.splice(todosArray.indexOf(value), 1)
       todosArray.splice(todosArray.indexOf(value), 1)
       localStorage.setItem('todos', JSON.stringify(todosArray))
@@ -123,20 +170,19 @@ window.onload = function () {
     container.appendChild(todoItem)
     container.appendChild(details)
     container.appendChild(date)
+    wrap.appendChild(check)
     wrap.appendChild(container)
-    wrap.appendChild(icon)
+    wrap.appendChild(del)
     todoList.appendChild(wrap)
-
 
   }
 
+  //_________________________
+
   todosArray.map(item => todoMaker(item))
 
-  // Step 4 -> attach an event listener to the `clear all` button listening for
-  // a user click.
-  // In the function use a while loop checking to see whether there
-  // is an li element as a child of the `ul` tag. In the code block use the
-  // removeChild() DOM method to removed that `li` using the firstChild property.
+  //_________________________
+
   button.addEventListener("click", (e) => {
     e.preventDefault()
     localStorage.clear()

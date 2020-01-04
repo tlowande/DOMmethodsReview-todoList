@@ -16,7 +16,13 @@ body {
   width: 250px;
   text-align: center;
   border-radius: 20px;
-  font-weight: lighter;
+  margin-bottom: 25px;
+  margin-top: 0;
+  /* font-weight: lighter; */
+}
+
+h2 {
+  margin: 40px 0 5px 0;
 }
 form {
   display: flex;
@@ -82,11 +88,23 @@ p {
   margin: 0;
 }
 
+p:focus {
+  outline: none;
+}
+
 i {
   padding-left: 10px;
   position: relative;
   text-align-last: end;
   cursor: pointer;
+}
+
+.fa-check:hover {
+  color: green;
+}
+
+.fa-times-circle:hover {
+  color: red;
 }
 
 #clear {
@@ -95,6 +113,11 @@ i {
   color: rgb(237, 237, 237);
   border-radius: 10px;
   padding: 5px;
+  cursor: pointer;
+}
+
+#clear:focus {
+  outline: none;
 }
 
 .complete {
