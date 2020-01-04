@@ -12,14 +12,14 @@ window.onload = function () {
 
   const todosArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : []
 
-  const taskComplete = localStorage.getItem('taskComplete') ? JSON.parse(localStorage.getItem('taskComplete')) : []
+  // const taskComplete = localStorage.getItem('taskComplete') ? JSON.parse(localStorage.getItem('taskComplete')) : []
 
   // use localStorage setItem() method to set `todos` to a string with `JSON.stringify()`
   // JSON.stringify() if used because localStorage works with strings. This is how
   // we sent data to localStorage.
   localStorage.setItem('todos', JSON.stringify(todosArray))
 
-  localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+  // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
 
   // Declare a variable `storage` that contains all the information in localStorage.
   // We will assign to `storage` JSON.parse() method that converts strings from local
@@ -37,13 +37,12 @@ window.onload = function () {
   // Finally, set the `input.value` to an empty string.const form = document.querySelector("form");
   form.addEventListener("submit", e => {
     e.preventDefault()
-    console.log(e)
 
     // push onto `todosArray` the `input.value`
     // todosArray.push(input.value)
     let todo = {
       "title": input.value,
-      "description": inputDescription.value,
+      "description": inputDescription.value ? inputDescription.value : "description",
       "complete": "false",
       "date": new Date()
     }
@@ -53,7 +52,7 @@ window.onload = function () {
     localStorage.setItem('todos', JSON.stringify(todosArray))
     // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
 
-    todoMaker(input.value)
+    todoMaker(todo)
     input.value = ""
     inputDescription.value = ""
   })
@@ -63,26 +62,39 @@ window.onload = function () {
   const todoMaker = (value) => {
 
     let container = document.createElement("div");
+    let wrap = document.createElement("div");
     let todoItem = document.createElement("p");
+    let details = document.createElement("p");
+    let date = document.createElement("small");
+    wrap.classList.add('wrap')
+    // todoItem.textContent = value
+    todoItem.textContent = value.title;
+    details.textContent = value.description
+    date.textContent = value.date
 
-    todoItem.textContent = value;
+    // console.log(taskComplete[todosArray.indexOf(value)])
 
-    console.log(taskComplete[todosArray.indexOf(value)])
-
-    if (taskComplete[todosArray.indexOf(value)] === "true") {
+    // if (taskComplete[todosArray.indexOf(value)] === "true") {
+    if (value.complete === "true") {
       todoItem.classList.add('complete')
     }
+
     todoItem.addEventListener("click", () => {
       if (todoItem.classList.contains('complete')) {
         todoItem.classList.remove('complete')
-        taskComplete.splice(todosArray.indexOf(value), 1, "false")
-        localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+        // taskComplete.splice(todosArray.indexOf(value), 1, "false")
+        todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "false" })
+
+        localStorage.setItem('todos', JSON.stringify(todosArray))
+        // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
       } else {
         todoItem.classList.add('complete')
-        taskComplete.splice(todosArray.indexOf(value), 1, "true")
-        localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+        // taskComplete.splice(todosArray.indexOf(value), 1, "true")
+        todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "true" })
+
+        localStorage.setItem('todos', JSON.stringify(todosArray))
+        // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
       }
-      console.log(taskComplete)
     })
 
     const icon = document.createElement("i")
@@ -90,17 +102,19 @@ window.onload = function () {
     icon.setAttribute("class", "fas fa-times-circle")
 
     icon.addEventListener("click", () => {
-      taskComplete.splice(todosArray.indexOf(value), 1)
-      // console.log(taskComplete)
+      // taskComplete.splice(todosArray.indexOf(value), 1)
       todosArray.splice(todosArray.indexOf(value), 1)
       localStorage.setItem('todos', JSON.stringify(todosArray))
-      localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
-      container.parentNode.removeChild(container)
+      // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
+      wrap.parentNode.removeChild(wrap)
     })
 
     container.appendChild(todoItem)
-    container.appendChild(icon)
-    todoList.appendChild(container)
+    container.appendChild(details)
+    container.appendChild(date)
+    wrap.appendChild(container)
+    wrap.appendChild(icon)
+    todoList.appendChild(wrap)
 
 
   }

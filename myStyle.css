@@ -45,7 +45,7 @@ ul {
   background-color: rgb(186, 134, 151, 1);
   overflow: auto;
 }
-div {
+.wrap {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
