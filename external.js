@@ -8,6 +8,7 @@ window.onload = function () {
   const todoList = document.querySelector("ul");
   const button = document.querySelector("button");
   const inputDescription = document.getElementById("description")
+  const date = document.getElementById("date")
   const input = document.getElementById("user-todo");
 
   const todosArray = localStorage.getItem('todos') ? JSON.parse(localStorage.getItem('todos')) : []
@@ -40,11 +41,12 @@ window.onload = function () {
 
     // push onto `todosArray` the `input.value`
     // todosArray.push(input.value)
+
     let todo = {
       "title": input.value,
-      "description": inputDescription.value ? inputDescription.value : "description",
+      "description": inputDescription.value ? inputDescription.value : "",
       "complete": "false",
-      "date": new Date()
+      "date": date.value
     }
     todosArray.push(todo)
     // taskComplete.push("false")
@@ -55,6 +57,7 @@ window.onload = function () {
     todoMaker(todo)
     input.value = ""
     inputDescription.value = ""
+    date.value = ""
   })
 
   // Step 3 -> create a todoMaker function that creates 'li' elements with the text user provides
@@ -65,30 +68,38 @@ window.onload = function () {
     let wrap = document.createElement("div");
     let todoItem = document.createElement("p");
     let details = document.createElement("p");
-    let date = document.createElement("small");
+    let date = document.createElement("p");
     wrap.classList.add('wrap')
+    container.classList.add('container')
     // todoItem.textContent = value
     todoItem.textContent = value.title;
+    todoItem.classList.add('to-do')
     details.textContent = value.description
-    date.textContent = value.date
+    details.classList.add('description')
+    date.textContent = (new Date(value.date)).toDateString();
+    date.classList.add('date')
 
     // console.log(taskComplete[todosArray.indexOf(value)])
 
     // if (taskComplete[todosArray.indexOf(value)] === "true") {
     if (value.complete === "true") {
-      todoItem.classList.add('complete')
+      container.classList.add('complete')
+    } else if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
+      date.classList.add('warning')
+    } else if (new Date(value.date) < new Date()) {
+      date.classList.add('delayed')
     }
 
     todoItem.addEventListener("click", () => {
-      if (todoItem.classList.contains('complete')) {
-        todoItem.classList.remove('complete')
+      if (container.classList.contains('complete')) {
+        container.classList.remove('complete')
         // taskComplete.splice(todosArray.indexOf(value), 1, "false")
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "false" })
 
         localStorage.setItem('todos', JSON.stringify(todosArray))
         // localStorage.setItem('taskComplete', JSON.stringify(taskComplete))
       } else {
-        todoItem.classList.add('complete')
+        container.classList.add('complete')
         // taskComplete.splice(todosArray.indexOf(value), 1, "true")
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "true" })
 

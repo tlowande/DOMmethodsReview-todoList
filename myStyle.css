@@ -1,6 +1,6 @@
 body {
   padding: 15px;
-  background-color: rgb(186, 134, 151);
+  background-color: rgb(165, 88, 88);
   font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
   background-image: url("https://www.transparenttextures.com/patterns/brick-wall.png");
   color: rgb(237, 237, 237);
@@ -18,10 +18,31 @@ body {
   border-radius: 20px;
   font-weight: lighter;
 }
+form {
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
+}
+
 input {
   width: 200px;
-  border-radius: 10px;
+  margin: none;
   padding: 5px;
+  font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
+}
+.container {
+  color: rgb(68, 68, 68);
+}
+.to-do {
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+.description {
+  margin-left: 10px;
+}
+.date {
+  font-size: 0.8rem;
+  margin-left: 10px;
 }
 
 input:focus {
@@ -42,7 +63,8 @@ ul {
   border-radius: 10px;
   box-shadow: 5px 5px 5px;
   background-image: none;
-  background-color: rgb(186, 134, 151, 1);
+  background-color: rgb(221, 221, 221);
+
   overflow: auto;
 }
 .wrap {
@@ -50,6 +72,7 @@ ul {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  padding: 0px 0 15px 0;
 }
 
 p {
@@ -68,12 +91,21 @@ i {
 
 #clear {
   font-family: "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS", sans-serif;
-  background-color: rgb(119, 12, 48);
+  background-color: rgb(158, 51, 8);
   color: rgb(237, 237, 237);
   border-radius: 10px;
+  padding: 5px;
 }
 
 .complete {
   text-decoration: line-through;
-  color: grey;
+  color: rgb(190, 190, 190);
+}
+
+.warning {
+  color: rgb(206, 171, 18);
+}
+
+.delayed {
+  color: red;
 }
