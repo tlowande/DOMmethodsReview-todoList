@@ -8,4 +8,4 @@ This project has been deployed for educational purposes only and it is available
 
 ## The Final Product
 
-!["single Page Application"](./todoTracker.gif)
+!["single Page Application"](./todo-localstorage.gif)
