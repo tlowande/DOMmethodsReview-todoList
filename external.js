@@ -188,5 +188,6 @@ window.onload = function () {
     while (todoList.firstChild) {
       todoList.removeChild(todoList.firstChild)
     }
+    todosArray.length = 0
   })
 }
