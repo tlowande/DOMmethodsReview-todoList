@@ -11,7 +11,7 @@ body {
 
 #title {
   padding: 10px;
-  font-size: 36px;
+  font-size: 30px;
   border: 2px solid;
   width: 250px;
   text-align: center;
@@ -21,8 +21,9 @@ body {
   /* font-weight: lighter; */
 }
 
-h2 {
+h3 {
   margin: 40px 0 5px 0;
+  text-decoration: underline;
 }
 form {
   display: flex;

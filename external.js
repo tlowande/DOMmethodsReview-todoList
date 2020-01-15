@@ -55,7 +55,7 @@ window.onload = function () {
     details.classList.add('description')
     details.setAttribute("contenteditable", "true");
 
-    date.textContent = (new Date(value.date)).toDateString();
+    date.textContent = (new Date(value.date.replace(/-/g, "/"))).toDateString();
     date.classList.add('date')
     // date.setAttribute("contenteditable", "true");
 
@@ -64,9 +64,9 @@ window.onload = function () {
     //sets CSS when refreshing the page to each item
     if (value.complete === "true") {
       container.classList.add('complete')
-    } else if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
+    } else if ((new Date(value.date.replace(/-/g, "/"))).toDateString() === (new Date()).toDateString()) {
       date.classList.add('warning')
-    } else if (new Date(value.date) < new Date()) {
+    } else if (Date.parse(value.date.replace(/-/g, "/")) < Date.parse(new Date().toDateString())) {
       date.classList.add('delayed')
     }
 
@@ -122,11 +122,19 @@ window.onload = function () {
 
         container.classList.remove('complete')
 
-        if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
+
+
+        if ((new Date(value.date.replace(/-/g, "/"))).toDateString() === (new Date()).toDateString()) {
           date.classList.add('warning')
-        } else if (new Date(value.date) < new Date()) {
+        } else if (Date.parse(value.date.replace(/-/g, "/")) < Date.parse(new Date().toDateString())) {
           date.classList.add('delayed')
         }
+
+        // if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
+        //   date.classList.add('warning')
+        // } else if (new Date(value.date) < new Date()) {
+        //   date.classList.add('delayed')
+        // }
 
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "false" })
 
