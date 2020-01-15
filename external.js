@@ -171,7 +171,7 @@ window.onload = function () {
     wrap.appendChild(check)
     wrap.appendChild(container)
     wrap.appendChild(del)
-    todoList.appendChild(wrap)
+    todoList.prepend(wrap)
 
   }
   //todoMaker ends here
