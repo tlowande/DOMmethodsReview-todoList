@@ -79,9 +79,10 @@ window.onload = function () {
         ...value,
         "description": details.innerText,
       }
-      let index = todosArray.findIndex(e => e === value)
+      // let index = todosArray.findIndex(e => e === value)
 
-      todosArray.splice(index, 1, newValue)
+      // todosArray.splice(index, 1, newValue)
+      todosArray.splice(todosArray.indexOf(value), 1, newValue)
       localStorage.setItem('todos', JSON.stringify(todosArray))
     })
 
@@ -95,14 +96,23 @@ window.onload = function () {
         ...value,
         "title": todoItem.innerText
       }
-      console.log(newValue)
+      // console.log(newValue)
+      // console.log(todosArray)
 
-      let index = todosArray.findIndex(e => e === value)
-      console.log(index)
+      // let index = todosArray.findIndex(e => {
+      // console.log(e)
+      // console.log(value)
+      // e === value
+      // })
+      // console.log(index)
 
-      todosArray.splice(index, 1, newValue)
+      // if (index > -1) {
 
+      // todosArray.splice(index, 1, newValue)
+      todosArray.splice(todosArray.indexOf(value), 1, newValue)
+      // console.log(todosArray)
       localStorage.setItem('todos', JSON.stringify(todosArray))
+      // }
     })
 
     //_________________________
@@ -129,15 +139,14 @@ window.onload = function () {
         } else if (Date.parse(value.date.replace(/-/g, "/")) < Date.parse(new Date().toDateString())) {
           date.classList.add('delayed')
         }
+        let newValue = {
+          ...value,
+          "complete": "false"
+        }
 
-        // if ((new Date(value.date)).toDateString() === (new Date()).toDateString()) {
-        //   date.classList.add('warning')
-        // } else if (new Date(value.date) < new Date()) {
-        //   date.classList.add('delayed')
-        // }
-
-        todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "false" })
-
+        // let index = todosArray.findIndex(e => e === value)
+        // todosArray.splice(index, 1, { ...value, "complete": "false" })
+        todosArray.splice(todosArray.indexOf(value), 1, newValue)
         localStorage.setItem('todos', JSON.stringify(todosArray))
 
       } else {
@@ -145,7 +154,9 @@ window.onload = function () {
         date.classList.remove('warning')
         date.classList.remove('delayed')
         container.classList.add('complete')
-
+        // let index = todosArray.findIndex(e => e === value)
+        // console.log(index)
+        // todosArray.splice(index, 1, { ...value, "complete": "true" })
         todosArray.splice(todosArray.indexOf(value), 1, { ...value, "complete": "true" })
 
         localStorage.setItem('todos', JSON.stringify(todosArray))
